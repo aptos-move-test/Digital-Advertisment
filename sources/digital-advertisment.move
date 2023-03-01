@@ -18,25 +18,31 @@ module digital_advertisment::advertisment {
         // bool public isCompleted = false,
     }
 
+    //defines
+    const ONLY_ORACLE_CONFIRM_VIEWS:u64=0;
+    const TARGET_VIEWS_NOT_ACHIEVED:u64=1;
+    const PAYMENT_ALREADY_TRIGGERED:u64=2;
+    
+
     //Create a event that must be triggered to notify when payment is done
 
     // Constructor to initialize the contract
-    struct advertismen has key,store,(address _advertiser, address _publisher, address _oracle, uint _targetViews, uint _paymentAmount) {
-        advertiser = _advertiser;
-        publisher = _publisher;
-        oracle = _oracle;
-        targetViews = _targetViews;
-        paymentAmount = _paymentAmount;
+    struct advertismen has key,store {
+        advertiser : _advertiser,
+        publisher : _publisher,
+        oracle : _oracle,
+        targetViews : _targetViews,
+        paymentAmount : _paymentAmount,
     }
 
     // Function to confirm that the publisher has achieved the predetermined targets
      public entry fun confirmViews<CoinType>(
-        assert!(msg.sender == oracle, "Only oracle can confirm the views");
-        assert!(views >= targetViews, "The target views have not been achieved");
-        assert!(!isCompleted, "Payment has already been triggered");
+        assert!(msg.sender == oracle, ONLY_ORACLE_CONFIRM_VIEWS);
+        assert!(views >= targetViews, TARGET_VIEWS_NOT_ACHIEVED);
+        assert!(!isCompleted, PAYMENT_ALREADY_TRIGGERED);
 
         // Trigger the payment to the publisher
-        
+
      )
 
     
